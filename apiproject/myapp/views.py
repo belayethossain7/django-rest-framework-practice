@@ -19,6 +19,29 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.reverse import reverse
+
+
+
+@api_view(["GET"])
+def api_root(request, format=None):
+    return Response(
+        {
+            "contact": reverse("contact-list", request=request, format=format),
+            
+        }
+    )
+
+
+
+
+
+
+
+
+
+
+
 class BlogList(generics.ListCreateAPIView, mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,

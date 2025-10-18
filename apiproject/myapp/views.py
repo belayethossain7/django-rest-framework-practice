@@ -13,6 +13,11 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+
+
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 class BlogList(generics.ListCreateAPIView, mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
@@ -20,6 +25,10 @@ class BlogList(generics.ListCreateAPIView, mixins.RetrieveModelMixin,
     generics.GenericAPIView,):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+
+    #authentication_classes = [SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

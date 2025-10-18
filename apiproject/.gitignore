@@ -1,0 +1,84 @@
+# ===================================
+# Django & Python
+# ===================================
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pdb
+*.log
+*.pot
+*.mo
+*.py[cod]
+
+# Ignore virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Ignore SQLite database
+db.sqlite3
+*.sqlite3
+
+# Ignore Django static & media files
+staticfiles/
+media/
+static/
+uploads/
+
+# Ignore compiled or temporary files
+*.db
+*.bak
+*.swp
+*.swo
+*.tmp
+*.temp
+*.pid
+*.seed
+
+# ===================================
+# IDE & Editor Files
+# ===================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ===================================
+# OS-specific files
+# ===================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===================================
+# Test & Cache Files
+# ===================================
+.coverage
+.tox/
+.cache/
+pytest_cache/
+htmlcov/
+*.egg
+*.egg-info/
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+parts/
+sdist/
+var/
+*.manifest
+*.spec
+
+# ===================================
+# Node.js (if using React or frontend build)
+# ===================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json

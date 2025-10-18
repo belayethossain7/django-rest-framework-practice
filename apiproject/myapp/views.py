@@ -1,38 +1,23 @@
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from myapp.serializers import ContactSerializer
-from rest_framework import viewsets
-from rest_framework.response import Response
-from myapp.models import Contact
+from django.shortcuts import render
+import requests
+import datetime
 
-class ContactViewSet(viewsets.ViewSet):
-    def list(self, request):
-        queryset = Contact.objects.all()
-        serializer = ContactSerializer(queryset, many=True)
-        return Response(serializer.data)
+def index(request):
+    if 'city' in request.POST:
+        city = request.POST['city']
+    else:
+        city = 'Mymensingh'
+        
+    appid = '76da090e27f24b3d8ac4e80d7558fad4'
+    URL   = 'https://api.openweathermap.org/data/2.5/weather'
 
-    def retrieve(self, request, pk=None):
-        queryset = Contact.objects.all()
-        contact = get_object_or_404(queryset, pk=pk)
-        serializer = ContactSerializer(contact)
-        return Response(serializer.data)
+    PARAMS = {'q': city, 'appid': appid, 'units': 'metric'}
 
-    def create(self, request):
-        serializer = ContactSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+    r = requests.get(url = URL, params = PARAMS)
+    res = r.json()
 
-    def update(self, request, pk=None):
-        contact = get_object_or_404(Contact, pk=pk)
-        serializer = ContactSerializer(contact, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    def destroy(self, request, pk=None):
-        contact = get_object_or_404(Contact, pk=pk)
-        contact.delete()
-        return Response(status=204)
+    description = res['weather'][0]['description']
+    icon        = res['weather'][0]['icon']
+    temp        = res['main']['temp']
+    day   = datetime.date.today()
+    return render(request, 'weatherapp/index.html', {'description': description, 'icon': icon, 'temp': temp, 'day': day, 'city': city})
